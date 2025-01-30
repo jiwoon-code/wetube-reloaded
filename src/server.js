@@ -1,35 +1,26 @@
 import express from "express";
+import morgan from "morgan";
 
 const PORT = 4000;
 
 const app = express();
-
-const logger = (req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-};
-
-const privateMidleware = (req, res, next) => {
-  const url = req.url;
-  if (url === "/protected") {
-    return res.send("<h1>not allowed</h1>");
-  }
-  console.log("allowed");
-  next();
-};
-
-const handleHome = (req, res) => {
-  return res.send("Home");
-};
-
-const handleProtected = (req, res) => {
-  return res.send("it's Private");
-};
-
+const logger = morgan("dev");
 app.use(logger);
-app.use(privateMidleware);
-app.get("/", handleHome);
-app.get("/protected", handleProtected);
+
+const globalRouter = express.Router();
+const userRouter = express.Router();
+const videoRouter = express.Router();
+
+const handleHome = (req, res) => res.send("Home");
+globalRouter.get("/", handleHome);
+const handleEditUser = (req, res) => res.send("Edit User");
+userRouter.get("/edit", handleEditUser);
+const handleWatchVideo = (req, res) => res.send("Watch Video");
+videoRouter.get("/watch", handleWatchVideo);
+
+app.use("/", globalRouter);
+app.use("/videos", videoRouter);
+app.use("/users", userRouter);
 
 const handleListening = () =>
   console.log(`server listening on port 4000 http://localhost:${PORT}`);
