@@ -3,18 +3,20 @@ import User from "../models/User";
 
 export const home = async (req, res) => {
   const videos = await Video.find({}).sort({ createdAt: "desc" });
-
   return res.render("home", { pageTitle: "Home", videos });
 };
+
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+
+  const video = await Video.findById(id).populate("owner");
   if (!video) {
     return res.render("404", { pageTitle: "Video not found." });
   }
-  return res.render("videos/watch", { pageTitle: video.title, video, owner });
+
+  return res.render("watch", { pageTitle: video.title, video });
 };
+
 export const getEdit = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
@@ -23,6 +25,7 @@ export const getEdit = async (req, res) => {
   }
   return res.render("edit", { pageTitle: `Edit: ${video.title}`, video });
 };
+
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
@@ -35,13 +38,13 @@ export const postEdit = async (req, res) => {
     description,
     hashtags: Video.formatHashtags(hashtags),
   });
-
   return res.redirect(`/videos/${id}`);
 };
 
 export const getUpload = (req, res) => {
-  return res.render("videos/upload", { pageTitle: "Upload Video" });
+  return res.render("upload", { pageTitle: "Upload Video" });
 };
+
 export const postUpload = async (req, res) => {
   const {
     user: { _id },
@@ -82,5 +85,5 @@ export const search = async (req, res) => {
       },
     });
   }
-  return res.render("videos/search", { pageTitle: "Search", videos });
+  return res.render("search", { pageTitle: "Search", videos });
 };
