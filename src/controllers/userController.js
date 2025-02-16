@@ -1,22 +1,21 @@
 import User from "../models/User";
+import Video from "../models/video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
-import Video from "../models/video";
 
-export const getJoin = (req, res) =>
-  res.render("users/join", { pageTitle: "Join" });
+export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
   const pageTitle = "Join";
   if (password !== password2) {
-    return res.status(400).render("users/join", {
+    return res.status(400).render("join", {
       pageTitle,
       errorMessage: "Password confirmation does not match.",
     });
   }
   const exits = await User.exists({ $or: [{ username }, { email }] });
   if (exits) {
-    return res.status(400).render("users/join", {
+    return res.status(400).render("join", {
       pageTitle,
       errorMessage: "This username/email already exits.",
     });
@@ -30,7 +29,7 @@ export const postJoin = async (req, res) => {
       password,
       location,
     });
-    return res.redirect("users/login");
+    return res.redirect("login");
   } catch (error) {
     console.log(error);
     return res.status(400).render("join", {
@@ -40,21 +39,21 @@ export const postJoin = async (req, res) => {
   }
 };
 export const getLogin = (req, res) =>
-  res.render("users/login", { pageTitle: "Login" });
+  res.render("login", { pageTitle: "Login" });
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username, socialOnly: false });
   const pageTitle = "Login";
   if (!user) {
-    return res.status(400).render("users/login", {
+    return res.status(400).render("login", {
       pageTitle,
       errorMessage: "An account with this username does not exists.",
     });
   }
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) {
-    return res.status(400).render("users/login", {
+    return res.status(400).render("login", {
       pageTitle,
       errorMessage: "Wrong password",
     });
@@ -205,10 +204,10 @@ export const postChangePassword = async (req, res) => {
 export const see = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
+  const videos = await Video.find({ owner: user._id });
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
-  const videos = await Video.find({ owner: user._id });
   return res.render("users/profile", {
     pageTitle: user.name,
     user,
