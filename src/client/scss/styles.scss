@@ -2,8 +2,11 @@
 @import "./config/_reset.scss";
 
 //components
+@import "./components/header.scss";
+@import "./components/footer.scss";
 
 // screens
+@import "./screens/home.scss";
 
 //defaults
 a {
@@ -15,4 +18,11 @@ body {
   font-family: "Courier New", Courier, monospace;
   background-color: $bg;
   color: white;
+}
+
+main {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
 }
