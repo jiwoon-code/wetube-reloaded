@@ -200,11 +200,66 @@ footer {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.search__form {
-  display: flex;
-  flex-direction: column;
+.auth-switch {
+  text-align: center;
+  margin-top: 40px;
+}
+.auth-switch a {
+  text-decoration: underline;
+}
+
+form {
   max-width: 420px;
   margin: 0 auto;
+  padding: 30px;
+  background-color: rgba(38, 44, 44, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+input {
+  all: unset;
+  margin-bottom: 5px;
+  padding: 15px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: #262c2c;
+  font-size: 16px;
+  color: white;
+  width: 90%;
+  position: relative;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+input[type=submit],
+.social__btn {
+  padding: 12px 20px;
+  border-radius: 5px;
+  background-color: white;
+  font-weight: 800;
+  color: #ff0033;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+}
+
+.social-login {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+.social-login .social__btn--github {
+  background-color: transparent;
+  color: azure;
+}
+
+.search__form {
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .search__form input {
   all: unset;
@@ -212,14 +267,24 @@ footer {
   padding: 15px 20px;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.9);
-  background-color: #3a3c3c;
+  background-color: #262c2c;
   font-size: 16px;
   color: white;
+  width: 90%;
+  position: relative;
 }
-.search__form input[type=submit] {
-  background-color: rgba(0, 0, 0, 0.3);
+.search__form input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+.search__form button {
+  all: unset;
+}
+.search__form button {
+  position: absolute;
+  right: 15px;
+  font-size: 20px;
   text-align: center;
-  padding: 10px;
+  cursor: pointer;
 }
 
 a {
