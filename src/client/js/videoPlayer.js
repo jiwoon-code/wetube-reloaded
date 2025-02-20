@@ -86,7 +86,7 @@ const handleFullScreen = () => {
 };
 
 playBtn.addEventListener("click", handlePlayClick);
-window.addEventListener("keydown", function (event) {
+window.addEventListener("keydown", (event) => {
   if (event.code == "Space") {
     handlePlayClick();
   }
