@@ -4,8 +4,11 @@ const muteBtn = document.getElementById("mute");
 const volumeRange = document.getElementById("volume");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
+const timeline = document.getElementById("timeline");
 
 let volumeValue = 0.5;
+let videoPlayStatus = false;
+let setVideoPlayStatus = false;
 video.volume = volumeValue;
 
 const formatTime = (seconds) =>
@@ -44,10 +47,29 @@ const handleVolumeChange = (event) => {
 
 const handleLoadedMetaData = () => {
   totalTime.innerHTML = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
 };
 
 const handleTimeUpdate = () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
+  timeline.value = Math.floor(video.currentTime);
+};
+
+const handleTimelineChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  if (!setVideoPlayStatus) {
+    videoPlayStatus = video.paused ? false : true;
+    setVideoPlayStatus = true;
+  }
+  video.pause();
+  video.currentTime = value;
+};
+
+const handleTimelineSet = () => {
+  videoPlayStatus ? video.play() : video.pause();
+  setVideoPlayStatus = false;
 };
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -55,3 +77,10 @@ muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("loadedmetadata", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
+timeline.addEventListener("input", handleTimelineChange);
+timeline.addEventListener("change", handleTimelineSet);
+window.addEventListener("keydown", function (event) {
+  if (event.code == "Space") {
+    handlePlayClick();
+  }
+});
