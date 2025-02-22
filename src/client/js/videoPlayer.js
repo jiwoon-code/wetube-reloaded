@@ -4,7 +4,7 @@ const playBtnIcon = playBtn.querySelector("i");
 const muteBtn = document.getElementById("mute");
 const muteBtnIcon = muteBtn.querySelector("i");
 const volumeRange = document.getElementById("volume");
-const currenTime = document.getElementById("currenTime");
+const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const timeline = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
@@ -59,7 +59,7 @@ const handleLoadedMetadata = () => {
 };
 
 const handleTimeUpdate = () => {
-  currenTime.innerText = formatTime(Math.floor(video.currentTime));
+  currentTime.innerText = formatTime(Math.floor(video.currentTime));
   timeline.value = Math.floor(video.currentTime);
 };
 
@@ -93,11 +93,11 @@ const handleMouseMove = () => {
     controlsMovementTimeout = null;
   }
   videoControls.classList.add("showing");
-  controlsMovementTimeout = setTimeout(hideControls, 3000);
+  controlsMovementTimeout = setTimeout(hideControls, 1000);
 };
 
 const handleMouseLeave = () => {
-  controlsTimeout = setTimeout(hideControls, 3000);
+  controlsTimeout = setTimeout(hideControls, 1000);
 };
 
 playBtn.addEventListener("click", handlePlayClick);
