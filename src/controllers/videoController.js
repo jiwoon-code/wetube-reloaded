@@ -51,7 +51,7 @@ export const postEdit = async (req, res) => {
     description,
     hashtags: Video.formatHashtags(hashtags),
   });
-
+  req.flash("success", "Changes save");
   return res.redirect(`/videos/${id}`);
 };
 
@@ -77,7 +77,6 @@ export const postUpload = async (req, res) => {
     user.save();
     return res.redirect("/");
   } catch (error) {
-    console.log(error);
     return res.status(400).render("videos/upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
