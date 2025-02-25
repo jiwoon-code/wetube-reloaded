@@ -28,6 +28,7 @@ block content
             a(href=`${video.id}/edit`) Edit Video &rarr;
             br
             a(href=`${video.id}/delete`) Delete Video &rarr;
+
     if loggedIn
         div.video__comments
             form.video__comment-form#commentForm
@@ -38,4 +39,5 @@ block content
 
 block scripts
     script(src="/static/js/videoPlayer.js")
-    script(src="/static/js/comment.js")  
+    if loggedIn
+        script(src="/static/js/comment.js")  
