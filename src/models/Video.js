@@ -10,6 +10,9 @@ const videoSchema = new mongoose.Schema({
     views: { type: Number, default: 0 },
     rating: { type: Number, default: 0 },
   },
+  comments: [
+    { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Comments" },
+  ],
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });
 
