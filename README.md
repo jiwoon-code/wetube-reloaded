@@ -14,3 +14,14 @@
 /videos/:id/edit -> Edit Video
 /videos/:id/delete -> Delete Video
 /videos/upload -> Upload Video
+
+# What wetube need more functions
+
+comment.js -> owner can delete the commnet, but the other users can't do that.
+using commentId
+
+# Deploy
+
+    fly.io -> node.js application deploy
+    MongoDB Atlas -> database deploy
+    aws -> files save
