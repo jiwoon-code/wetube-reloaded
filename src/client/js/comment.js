@@ -1,7 +1,5 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const textarea = form.querySelector("textarea");
-const btn = form.querySelector("button");
 
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -19,7 +17,6 @@ const handleSubmit = async (event) => {
     body: JSON.stringify({ text }),
   });
   textarea.value = "";
-  window.location.reload();
 };
 
 if (form) {
